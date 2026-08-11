@@ -14,6 +14,7 @@ const pressReleaseSchema = new mongoose.Schema({
     type: String, // Could be a YouTube link, website link, or PDF link
     required: true,
   },
+  pdf: { type: String, default: null, },
 }, { timestamps: true });
 
 module.exports = mongoose.model('PressRelease', pressReleaseSchema);

@@ -3,6 +3,11 @@ const router = express.Router();
 const hakkuController = require('../controllers/hakkuController');
 const pressReleaseController = require('../controllers/pressReleaseController');
 const pressCoverageController = require('../controllers/pressCoverageController');
+const multer = require('multer');
+
+const storage = multer.memoryStorage();
+const upload = multer({ storage });
+
 // Create
 router.post('/create', hakkuController.createHakku);
 
@@ -19,11 +24,40 @@ router.delete('/delete/:id', hakkuController.deleteHakku);
 
 //PRESS RELEASE ROUTES
 
-router.post('/press-release/create', pressReleaseController.createPressRelease);
-router.get('/press-release/all', pressReleaseController.getAllPressReleases);
-router.get('/press-release/:id', pressReleaseController.getPressReleaseById);
-router.put('/press-release/update/:id', pressReleaseController.updatePressRelease);
-router.delete('/press-release/delete/:id', pressReleaseController.deletePressRelease);
+
+router.post(
+  '/press-release/create',
+  upload.single('pdf'),
+  pressReleaseController.createPressRelease
+);
+
+router.get(
+  '/press-release/all',
+  pressReleaseController.getAllPressReleases
+);
+
+router.get(
+  '/press-release/:id',
+  pressReleaseController.getPressReleaseById
+);
+
+router.put(
+  '/press-release/update/:id',
+  upload.single('pdf'),
+  pressReleaseController.updatePressRelease
+);
+
+router.delete(
+  '/press-release/delete/:id',
+  pressReleaseController.deletePressRelease
+);
+
+
+// router.post('/press-release/create', pressReleaseController.createPressRelease);
+// router.get('/press-release/all', pressReleaseController.getAllPressReleases);
+// router.get('/press-release/:id', pressReleaseController.getPressReleaseById);
+// router.put('/press-release/update/:id', pressReleaseController.updatePressRelease);
+// router.delete('/press-release/delete/:id', pressReleaseController.deletePressRelease);
 
 
 
